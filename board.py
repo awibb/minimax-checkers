@@ -34,10 +34,6 @@ class Board:
                     self.board[i][j] = Piece(i,j,RED)
             order = not order
 
-    
-        
-       
-    
     def draw(self, window):
         self.draw_squares(window)
         for row in range(ROWS):
@@ -45,4 +41,3 @@ class Board:
                 piece = self.board[row][col]
                 if(piece != 0):
                     piece.draw(window)
-
