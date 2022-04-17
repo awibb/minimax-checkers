@@ -18,22 +18,25 @@ class Board:
     
     def create_board(self):
         for row in range(ROWS):
-            self.board.append([])
-            for col in range(COLS):
-                #default position of pieces using the standard checkers layout
-                if col % 2 == ((row + 1) % 2):
-                    #all pieces above row 3 will be white
-                    if row < 3:
-                        self.board[row].append(Piece(row, col, WHITE))
-                    #all pieces below row 4 will be red
-                    elif row > 4:
-                        self.board[row].append(Piece(row, col, RED))
-                    #middle rows get 0's
-                    else:
-                        self.board[row].append(0)
-                #alternating sqaures in rows 1-3 and 4-7 get a 0
-                else:
-                    self.board[row].append(0)
+            self.board.append([0,0,0,0,0,0,0,0])
+        
+        order = True
+        for i in range(3):
+            for j in range(COLS):
+                if j %  2 == order:
+                    self.board[i][j] = Piece(i,j,WHITE)
+            order = not order
+
+        order = False
+        for i in range(5,8):
+            for j in range(COLS):
+                if j %  2 == order:
+                    self.board[i][j] = Piece(i,j,RED)
+            order = not order
+
+    
+        
+       
     
     def draw(self, window):
         self.draw_squares(window)
