@@ -51,6 +51,8 @@ class Board:
 
     def move_list(self, turn):
         moving_pieces = []
+        actual_pieces = []
+        flag = False
         for j in range(8):
             for i in range(8):
                 if type(self.board[j][i]) == Zeton:
@@ -58,6 +60,13 @@ class Board:
                         piece = self.board[j][i]
                         if self.can_move(piece):
                             moving_pieces.append(piece)
+        for piec in moving_pieces:
+            if piec.must_attack == True:
+                actual_pieces.append(piec)
+                flag = True
+        if flag == True:
+            return actual_pieces
+
         return moving_pieces
 
 
@@ -101,7 +110,7 @@ class Board:
                         move = [y_pos+1, x_pos-1]
                         normal_moves.append(move)
                     elif type(self.board[y_pos+1][x_pos-1]) == Zeton:
-                        if self.board[y_pos+1][x_pos-1].color == pion.color*-1 and x_pos>1 and y_pos<6 and self.board[y_pos-1][x_pos+2] == 0:
+                        if self.board[y_pos+1][x_pos-1].color == pion.color*-1 and x_pos>1 and y_pos<6 and self.board[y_pos+2][x_pos-2] == 0:
                             attack = True
                             move = [y_pos+2, x_pos-2]
                             attack_moves.append(move)
