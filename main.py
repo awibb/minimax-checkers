@@ -28,9 +28,16 @@ def main():
                 row, col = x_y(pos)
                 #debug 
                 print("cordinates: ", row, col)
-                if(board.board[row][col] != 0):
+                #if the user clicks on a red or white piece
+                if board.board[row][col] != 0 and board.board[row][col] != 1:
                     #debug 
                     print("piece color: ", board.board[row][col].color)
+
+                    board.find_valid_move()
+                #if the user clicks on a green circle(a valid move for the previously clicked piece)
+                elif board.board[row][col] == 1:
+                #process moving of the previously selected piece
+                   board.clear_moves()
                 
         board.draw(WINDOW)
         pygame.display.update()
