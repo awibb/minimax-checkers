@@ -11,19 +11,20 @@ class Game:
 
     def show(self):
         for row in range(8):
-            rzad = "|"
+            rzad = " |"
             for column in range(8):
                 if(self.board.board[7-row][column] == 0):
                     rzad += " 0 |"
                 else:
                     literka = str(self.board.board[7-row][column])
                     if literka == "1":
-                        rzad += " 1 |"
+                        rzad += " B |"
                     else:
-                        rzad += "-1 |"
-            print("----------------------------------")
-            print(rzad)
-        print("----------------------------------\n")
+                        rzad += " W |"
+            print("-------------------------------------")
+            print(8 - row , rzad)
+        print("-------------------------------------")
+        print("   | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |")
 
     
     def play(self):
@@ -32,17 +33,18 @@ class Game:
             print("Select a piece in a format x y: ")
             x, y = input().split(" ")
             pionek = self.board.board[int(y)-1][int(x)-1]
-            if self.board.can_move(pionek) == True:
-                moves = self.board.get_valid_moves(pionek)
-                print("Input dectination in a format x y: ")
-                x_move, y_move = input().split(" ")
-                ruch = [int(y_move)-1, int(x_move)-1]
-                for move in moves:
-                    print(move)
-                if ruch in moves:
-                    self.board.move(pionek, ruch)
-                else:
-                    print("Invalid move")
+            if pionek.color == self.turn:
+                if self.board.can_move(pionek) == True:
+                    moves = self.board.get_valid_moves(pionek)
+                    print("Input dectination in a format x y: ")
+                    x_move, y_move = input().split(" ")
+                    ruch = [int(y_move)-1, int(x_move)-1]
+                    for move in moves:
+                        print(move)
+                    if ruch in moves:
+                        self.board.move(pionek, ruch)
+                    else:
+                        print("Invalid move")
 
     def show_moves(self):
         moves = self.board.get_valid_moves(self.board.board[2][2])

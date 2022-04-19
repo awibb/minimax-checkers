@@ -24,6 +24,7 @@ class Board:
                         self.board[row].append(0)
                 else:
                     self.board[row].append(0)
+                    
     def remove(self, pion, ruch):
         x_dec = (ruch[1]+pion.x)/2
         y_dec = (ruch[0]+pion.y)/2
@@ -69,7 +70,7 @@ class Board:
             return False
         return True
 
-    def get_valid_moves(self, pion, attack=False):
+    def get_valid_moves(self, pion:Zeton, attack=False):
         normal_moves = []
         attack_moves = []
         x_pos = pion.x
@@ -91,15 +92,17 @@ class Board:
                     attack = True
                     move = [y_pos+2, x_pos-2]
                     attack_moves.append(move)
-            if self.board[y_pos-1][x_pos-1] == pion.color*-1 and x_pos>1 and y_pos>1 and self.board[y_pos-2][x_pos-2] == 0:
-                attack = True
-                move = [y_pos-2][x_pos-2]
-                attack_moves.append(move)
+            if type(self.board[y_pos-1][x_pos-1]) == Zeton:
+                if self.board[y_pos-1][x_pos-1].color == pion.color*-1 and x_pos>1 and y_pos>1 and self.board[y_pos-2][x_pos-2] == 0:
+                    attack = True
+                    move = [y_pos-2][x_pos-2]
+                    attack_moves.append(move)
 
-            if self.board[y_pos-1][x_pos+1] == pion.color*-1 and x_pos<6 and y_pos>1 and self.board[y_pos-2][x_pos+2] == 0:
-                attack = True
-                move = [y_pos-2][x_pos+2]
-                attack_moves.append(move)
+            if type(self.board[y_pos-1][x_pos+1]) == Zeton: 
+                if self.board[y_pos-1][x_pos+1] == pion.color*-1 and x_pos<6 and y_pos>1 and self.board[y_pos-2][x_pos+2] == 0:
+                    attack = True
+                    move = [y_pos-2][x_pos+2]
+                    attack_moves.append(move)
 
         elif pion.color == -1 or pion.king == True:
             if self.board[y_pos-1][x_pos-1] == 0:
@@ -118,15 +121,17 @@ class Board:
                     attack = True
                     move = [y_pos-2, x_pos+2]
                     attack_moves.append(move)
-            if self.board[y_pos+1][x_pos-1] == pion.color*-1 and x_pos>1 and y_pos<6 and self.board[y_pos+2][x_pos-2] == 0:
-                attack = True
-                move = [y_pos+2][x_pos-2]
-                attack_moves.append(move)
+            if type(self.board[y_pos+1][x_pos-1]) == Zeton:
+                if self.board[y_pos+1][x_pos-1] == pion.color*-1 and x_pos>1 and y_pos<6 and self.board[y_pos+2][x_pos-2] == 0:
+                    attack = True
+                    move = [y_pos+2][x_pos-2]
+                    attack_moves.append(move)
 
-            if self.board[y_pos+1][x_pos+1] == pion.color*-1 and x_pos<6 and y_pos<6 and self.board[y_pos+2][x_pos+2] == 0:
-                attack = True
-                move = [y_pos+2][x_pos+2]
-                attack_moves.append(move)
+            if type(self.board[y_pos+1][x_pos+1]) == Zeton:
+                if self.board[y_pos+1][x_pos+1] == pion.color*-1 and x_pos<6 and y_pos<6 and self.board[y_pos+2][x_pos+2] == 0:
+                    attack = True
+                    move = [y_pos+2][x_pos+2]
+                    attack_moves.append(move)
 
 
         if attack == False:
