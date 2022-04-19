@@ -43,6 +43,7 @@ class Game:
                         print(move)
                     if ruch in moves:
                         self.board.move(pionek, ruch)
+                        self.turn = self.turn*-1
                     else:
                         print("Invalid move")
 
