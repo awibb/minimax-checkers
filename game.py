@@ -9,6 +9,8 @@ class Game:
         self.turn = RED
         self.moves = []
         self.win = False
+        self.prev_x = None
+        self._prev_y = None
 
     def show(self):
         for row in range(8):
@@ -28,13 +30,14 @@ class Game:
         print("   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |")
 
     
-    def play(self, x,y):
+    def play(self,x,y):
         #debug
-        self.show()
+        # self.show()
+        self.board.clear_moves()
         print("Current Piece Location: ({},{})".format(x,y))
         pieces = self.board.move_list(self.turn)
-        print("List of all pieces that can move at current moment:")
-        self.show_moveavle_pieces(pieces)
+        # print("List of all pieces that can move at current moment:")
+        # self.show_moveavle_pieces(pieces)
         pionek = self.board.board[int(x)][int(y)]
         #if pionek.color == self.turn:
         if self.board.can_move(pionek) == True:
@@ -42,17 +45,18 @@ class Game:
             print("Possible moves for picked piece:")
             for move in moves:
                 print(move[1], " ", move[0])
-            print("Input dectination in a format x y: ")
-            x_move, y_move = input().split(" ")
-            ruch = [int(y_move), int(x_move)]
-            if ruch in moves:
-                self.board.move(pionek, int(y_move), int(x_move))
-                if self.turn == RED:
-                    self.turn = WHITE
-                else:
-                    self.turn = RED
-            else:
-                print("Invalid move")
+            self.board.draw_moves(moves)
+            self.prev_x = x
+            self.prev_y = y
+            # ruch = [int(y_move), int(x_move)]
+            # if ruch in moves:
+            #     self.board.move(pionek, int(y_move), int(x_move))
+            #     if self.turn == RED:
+            #         self.turn = WHITE
+            #     else:
+            #         self.turn = RED
+            # else:
+            #     print("Invalid move")
 
     def show_moves(self):
         moves = self.board.get_valid_moves(self.board.board[2][2])
@@ -62,3 +66,12 @@ class Game:
     def show_moveavle_pieces(self, pieces):
         for piece in pieces:
             print(piece.col, " ", piece.row)
+    
+    def process_move(self, row, col):
+        self.board.clear_moves()
+        prev_piece = self.board.board[self.prev_x][self.prev_y]
+        self.board.move(prev_piece, int(row), int(col))
+        if self.turn == RED:
+            self.turn = WHITE
+        else:
+            self.turn = RED

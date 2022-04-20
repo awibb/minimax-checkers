@@ -53,10 +53,10 @@ class Board:
             for col in range(COLS):
                 piece = self.board[row][col]
                 if(piece != 0):
-                    # if piece == 1:
-                    #     pygame.draw.circle(window, GREEN, (self.valid_move_position(col,row)), 15)
-                    # else:
-                    piece.draw(window)
+                    if piece == 1:
+                        pygame.draw.circle(window, GREEN, (self.valid_move_position(col,row)), 15)
+                    else:
+                        piece.draw(window)
 
 
     def get_valid_moves(self, pion:Piece, attack=False):
@@ -150,7 +150,12 @@ class Board:
                     piece = self.board[row][col]
                     if piece == 1:
                         self.board[row][col] = 0
-    
+    def draw_moves(self, moves):
+        for move in moves:
+            if type(self.board[move[0]][move[1]]) and self.board[move[0]][move[1]] == 0:
+                self.board[move[0]][move[1]] = 1
+
+
     def move(self, piece, row, col):
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
