@@ -68,17 +68,17 @@ class Board:
                 attack_pieces.append(piec)                
                 flag = True
         if flag == True:
-            max_jumps = 1
-            actual_pieces = []
-            for piec in attack_pieces:
-                moves = self.get_valid_moves(piec)
-                if len(moves) > max_jumps:
-                    actual_pieces = [piec]
-                    max_jumps = placeholder
-                elif len(moves) == max_jumps:
-                    actual_pieces.append(piec)
+            #max_jumps = 1
+            #actual_pieces = []
+            #for piec in attack_pieces:
+            #    moves = self.get_valid_moves(piec)
+            #    if len(moves) > max_jumps:
+            #        actual_pieces = [piec]
+            #        max_jumps = placeholder
+            #    elif len(moves) == max_jumps:
+            #        actual_pieces.append(piec)
 
-            return actual_pieces
+            return attack_pieces
 
         return moving_pieces
 
