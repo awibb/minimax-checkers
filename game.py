@@ -1,6 +1,6 @@
 from board import Board
 from piece import Piece
-from const import RED
+from const import RED, WHITE
 
 class Game:
     
@@ -47,7 +47,10 @@ class Game:
             ruch = [int(y_move), int(x_move)]
             if ruch in moves:
                 self.board.move(pionek, int(y_move), int(x_move))
-                self.turn = self.turn*-1
+                if self.turn == RED:
+                    self.turn = WHITE
+                else:
+                    self.turn = RED
             else:
                 print("Invalid move")
 
