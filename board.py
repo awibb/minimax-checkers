@@ -73,19 +73,21 @@ class Board:
                         move = [y_pos+1, x_pos+1]
                         normal_moves.append(move)
                     elif type(self.board[y_pos+1][x_pos+1]) == Piece:
-                        if self.board[y_pos+1][x_pos+1].color == RED and x_pos<6 and y_pos<6 and self.board[y_pos+2][x_pos+2] == 0:
-                            attack = True
-                            move = [y_pos+2, x_pos+2]
-                            attack_moves.append(move)
+                        if x_pos<6 and y_pos<6:
+                            if self.board[y_pos+1][x_pos+1].color == RED and self.board[y_pos+2][x_pos+2] == 0:
+                                attack = True
+                                move = [y_pos+2, x_pos+2]
+                                attack_moves.append(move)
                 if x_pos>0:
                     if self.board[y_pos+1][x_pos-1] == 0:
                         move = [y_pos+1, x_pos-1]
                         normal_moves.append(move)
                     elif type(self.board[y_pos+1][x_pos-1]) == Piece:
-                        if self.board[y_pos+1][x_pos-1].color == RED and x_pos>1 and y_pos<6 and self.board[y_pos+2][x_pos-2] == 0:
-                            attack = True
-                            move = [y_pos+2, x_pos-2]
-                            attack_moves.append(move)
+                        if  x_pos>1 and y_pos<6 and self.board[y_pos+2][x_pos-2] == 0:
+                            if self.board[y_pos+1][x_pos-1].color == RED and self.board[y_pos+2][x_pos-2] == 0:
+                                attack = True
+                                move = [y_pos+2, x_pos-2]
+                                attack_moves.append(move)
             if x_pos>1 and y_pos>1:
                 if type(self.board[y_pos-1][x_pos-1]) == Piece:
                     if self.board[y_pos-1][x_pos-1].color == RED and self.board[y_pos-2][x_pos-2] == 0:
@@ -178,6 +180,7 @@ class Board:
     def move(self, piece, row, col):
         if piece.must_attack == True:
             self.remove(piece, row, col)
+            piece.must_attack = False
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
 
@@ -204,16 +207,6 @@ class Board:
                 attack_pieces.append(piec)                
                 flag = True
         if flag == True:
-            #max_jumps = 1
-            #actual_pieces = []
-            #for piec in attack_pieces:
-            #    moves = self.get_valid_moves(piec)
-            #    if len(moves) > max_jumps:
-            #        actual_pieces = [piec]
-            #        max_jumps = placeholder
-            #   elif len(moves) == max_jumps:
-             #       actual_pieces.append(piec)
-
             return attack_pieces
 
         return moving_pieces

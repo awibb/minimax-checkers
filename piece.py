@@ -24,4 +24,6 @@ class Piece:
     def move(self, row, col):
         self.row = row
         self.col = col
+        if row == 0 or row == 7:
+            self.king = True
         self.piece_position()
