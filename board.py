@@ -92,14 +92,14 @@ class Board:
                 if type(self.board[y_pos-1][x_pos-1]) == Piece:
                     if self.board[y_pos-1][x_pos-1].color == RED and self.board[y_pos-2][x_pos-2] == 0:
                         attack = True
-                        move = [y_pos-2][x_pos-2]
+                        move = [y_pos-2, x_pos-2]
                         attack_moves.append(move)
 
             if x_pos<6 and y_pos>1:
                 if type(self.board[y_pos-1][x_pos+1]) == Piece:
                     if self.board[y_pos-1][x_pos+1].color == RED and self.board[y_pos-2][x_pos+2] == 0:
                         attack = True
-                        move = [y_pos-2][x_pos+2]
+                        move = [y_pos-2, x_pos+2]
                         attack_moves.append(move)
 
         elif pion.color == RED or pion.king == True:
@@ -130,13 +130,13 @@ class Board:
                         if self.board[y_pos+1][x_pos-1].color == WHITE and self.board[y_pos+2][x_pos-2] == 0:
                             attack = True
                             # IndexError: list index out of rang
-                            move = [y_pos+2][x_pos-2]
+                            move = [y_pos+2, x_pos-2]
                             attack_moves.append(move)
                 if x_pos<6:
                     if type(self.board[y_pos+1][x_pos+1]) == Piece:
                         if self.board[y_pos+1][x_pos+1].color == WHITE and self.board[y_pos+2][x_pos+2] == 0:
                             attack = True
-                            move = [y_pos+2][x_pos+2]
+                            move = [y_pos+2, x_pos+2]
                             attack_moves.append(move)
 
 
@@ -196,11 +196,9 @@ class Board:
         for j in range(8):
             for i in range(8):
                 if type(self.board[j][i]) == Piece:
-                    print(self.board[j][i].color, " ", turn)
                     if self.board[j][i].color == turn:
                         piece = self.board[j][i]
                         if self.can_move(piece):
-                            print(j, " ", i)
                             moving_pieces.append(piece)
         for piec in moving_pieces:
             if piec.must_attack == True:
