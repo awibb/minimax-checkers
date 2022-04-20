@@ -62,9 +62,9 @@ class Board:
     def get_valid_moves(self, pion:Piece, attack=False):
         normal_moves = []
         attack_moves = []
-        x_pos = pion.row
-        y_pos = pion.col
-        if pion.color == RED or pion.king == True:
+        x_pos = pion.col
+        y_pos = pion.row
+        if pion.color == WHITE or pion.king == True:
             if y_pos<7:
                 if x_pos<7:
                     if self.board[y_pos+1][x_pos+1] == 0:
@@ -98,7 +98,7 @@ class Board:
                         move = [y_pos-2][x_pos+2]
                         attack_moves.append(move)
 
-        elif pion.color == WHITE or pion.king == True:
+        elif pion.color == RED or pion.king == True:
             if y_pos > 0:
                 if x_pos > 0:
                     if self.board[y_pos-1][x_pos-1] == 0:
@@ -170,25 +170,27 @@ class Board:
         for j in range(8):
             for i in range(8):
                 if type(self.board[j][i]) == Piece:
+                    print(self.board[j][i].color, " ", turn)
                     if self.board[j][i].color == turn:
                         piece = self.board[j][i]
                         if self.can_move(piece):
+                            print(j, " ", i)
                             moving_pieces.append(piece)
         for piec in moving_pieces:
             if piec.must_attack == True:
                 attack_pieces.append(piec)                
                 flag = True
         if flag == True:
-            max_jumps = 1
-            actual_pieces = []
-            for piec in attack_pieces:
-                moves = self.get_valid_moves(piec)
-                if len(moves) > max_jumps:
-                    actual_pieces = [piec]
-                    max_jumps = placeholder
-                elif len(moves) == max_jumps:
-                    actual_pieces.append(piec)
+            #max_jumps = 1
+            #actual_pieces = []
+            #for piec in attack_pieces:
+            #    moves = self.get_valid_moves(piec)
+            #    if len(moves) > max_jumps:
+            #        actual_pieces = [piec]
+            #        max_jumps = placeholder
+            #   elif len(moves) == max_jumps:
+             #       actual_pieces.append(piec)
 
-            return actual_pieces
+            return attack_pieces
 
         return moving_pieces

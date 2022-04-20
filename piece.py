@@ -9,6 +9,7 @@ class Piece:
         self.color = color
         self.x, self.y = 0,0
         self.king = False
+        self.must_attack = False
         self.piece_position()
     
    
