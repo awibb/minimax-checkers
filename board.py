@@ -66,6 +66,7 @@ class Board:
         attack_moves = []
         x_pos = pion.col
         y_pos = pion.row
+        print(pion.king)
         if pion.color == WHITE or pion.king == True:
             if y_pos<7:
                 if x_pos<7:
@@ -102,7 +103,7 @@ class Board:
                         move = [y_pos-2, x_pos+2]
                         attack_moves.append(move)
 
-        elif pion.color == RED or pion.king == True:
+        if pion.color == RED or pion.king == True:
             if y_pos > 0:
                 if x_pos > 0:
                     if self.board[y_pos-1][x_pos-1] == 0:

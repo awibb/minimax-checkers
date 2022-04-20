@@ -25,5 +25,7 @@ class Piece:
         self.row = row
         self.col = col
         if row == 0 or row == 7:
+            print("elo")
             self.king = True
+            print(self.king)
         self.piece_position()
