@@ -40,8 +40,10 @@ class Board:
         new_piece.y = ruch[0]
         new_piece.color = pion.color
         new_piece.king = pion.king
+        new_piece.must_attack = False
         previous_location = [pion.y, pion.x]
         moves = self.get_valid_moves(new_piece)
+        max_lenght = 1
         if new_piece.must_attack == True:
             for move in moves:
                 reverse = [move, ruch]
@@ -49,7 +51,9 @@ class Board:
                     forward = [ruch, move]
                     path.append(forward)
                     lenght = self.get_max_attack_lenght(pion, move, path)+1
-                
+                if lenght > max_lenght:
+                    max_lenght = lenght
+        return max_lenght
         
 
     def move_list(self, turn):
@@ -182,4 +186,17 @@ class Board:
             return normal_moves
         else:
             pion.must_attack = True
-            return attack_moves
+            attack_lenght = []
+            actual_moves = []
+            max_lenght = 1
+            for move in attack_moves:
+                path = [[y_pos, x_pos], move]
+                lenght = self.get_max_attack_lenght(pion, move, path)
+                attack_lenght.append(lenght)
+                if lenght > max_lenght:
+                    max_lenght = lenght
+            for i in range(len(attack_lenght)):
+                if attack_lenght[i] == max_lenght:
+                    actual_moves.append(attack_moves[i])
+            
+            return actual_moves
