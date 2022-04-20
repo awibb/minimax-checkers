@@ -29,7 +29,7 @@ def main():
                 userClick = gra.board.board[row][col]
                 if type(userClick) == Piece and userClick.color == gra.turn:
                     gra.play(row,col)
-                if type(userClick) == int and gra.prev_x != None and gra.prev_y != None:
+                if type(userClick) == int and userClick == 1 and gra.prev_x != None and gra.prev_y != None:
                     gra.process_move(row,col)
         gra.board.draw(WINDOW)
         pygame.display.update()
