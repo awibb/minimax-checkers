@@ -163,9 +163,12 @@ class Board:
         #doesn't work correctly in some cases
             # Cases found with issues:
                 # red player jumping to the top right
-        x_dec = ((row+piece.row)/2) + 1 if piece.color == RED else ((row+piece.row)/2) - 1
-        y_dec = ((col+piece.col)/2) + 1 if piece.color == RED else ((col+piece.col)/2) - 1
-        self.board[int(x_dec)][int(y_dec)] = 0
+        dx = piece.row
+        dy = piece.col
+        dx = int((dx + row) // 2)
+        dy = int((dy + col) // 2)
+        self.board[int(dx)][int(dy)] = 0
+
         if(piece.color == RED):
             self.white_rem -= 1
         else:
@@ -173,10 +176,10 @@ class Board:
 
 
     def move(self, piece, row, col):
-        self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
-        piece.move(row, col)
         if piece.must_attack == True:
             self.remove(piece, row, col)
+        self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
+        piece.move(row, col)
 
     def can_move(self, pion):
         if len(self.get_valid_moves(pion)) == 0:
