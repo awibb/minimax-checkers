@@ -8,6 +8,7 @@ class Piece:
         self.col = col
         self.color = color
         self.x, self.y = 0,0
+        self.king = False
         self.piece_position()
     
    
@@ -18,3 +19,8 @@ class Piece:
     def draw(self, window):
         radius = SQUARE_SIZE // 2 - self.PADDING
         pygame.draw.circle(window, self.color, (self.x, self.y), radius)
+    
+    def move(self, row, col):
+        self.row = row
+        self.col = col
+        self.piece_position()
