@@ -4,7 +4,6 @@ from const import WIDTH, HEIGHT, SQUARE_SIZE
 from game import Game
 from piece import Piece
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
-
 pygame.display.set_caption("checkers-ui")
 
 

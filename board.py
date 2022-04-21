@@ -10,6 +10,7 @@ class Board:
         self.turn = RED
         self.create_board()
         self.white_rem, self.red_rem = 12,12
+        self.prev_white_rem, self.prev_red_rem  = self.white_rem, self.red_rem
     
 
     def set_x_y(self, x, y):
@@ -66,7 +67,7 @@ class Board:
         attack_moves = []
         x_pos = pion.col
         y_pos = pion.row
-        print(pion.king)
+        # print(pion.king)
         if pion.color == WHITE or pion.king == True:
             if y_pos<7:
                 if x_pos<7:
@@ -147,8 +148,6 @@ class Board:
             pion.must_attack = True
             return attack_moves
 
-
-
     def clear_moves(self):
         #after the move has been processed the board needs to have all green circles removed from it which are represented in the board as 1's
             for row in range(ROWS):
@@ -184,6 +183,7 @@ class Board:
             piece.must_attack = False
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
+        
 
     def can_move(self, pion):
         if len(self.get_valid_moves(pion)) == 0:
