@@ -12,3 +12,5 @@ WHITE = (255,255,255)
 BLACK = (0,0,0)
 #Used for drawing valid moves of a selected piece
 GREEN = (0,255,0)
+#king color
+KING = (240,230,140)
