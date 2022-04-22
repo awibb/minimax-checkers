@@ -64,89 +64,87 @@ class Board:
     def get_valid_moves(self, pion: Piece, attack=False):
         normal_moves = []
         attack_moves = []
-        print(type(pion))
-        print(pion)
-        x_pos = pion.col
-        y_pos = pion.row
+        if(type(pion) == Piece):
+            x_pos = pion.col
+            y_pos = pion.row
+            if pion.color == WHITE or pion.king == True:
+                if y_pos < 7:
+                    if x_pos < 7:
+                        if self.board[y_pos+1][x_pos+1] == 0:
+                            move = [y_pos+1, x_pos+1]
+                            normal_moves.append(move)
+                        elif type(self.board[y_pos+1][x_pos+1]) == Piece:
+                            if x_pos < 6 and y_pos < 6:
+                                if self.board[y_pos+1][x_pos+1].color == RED and self.board[y_pos+2][x_pos+2] == 0:
+                                    attack = True
+                                    move = [y_pos+2, x_pos+2]
+                                    attack_moves.append(move)
+                    if x_pos > 0:
+                        if self.board[y_pos+1][x_pos-1] == 0:
+                            move = [y_pos+1, x_pos-1]
+                            normal_moves.append(move)
+                        elif type(self.board[y_pos+1][x_pos-1]) == Piece:
+                            if x_pos > 1 and y_pos < 6 and self.board[y_pos+2][x_pos-2] == 0:
+                                if self.board[y_pos+1][x_pos-1].color == RED and self.board[y_pos+2][x_pos-2] == 0:
+                                    attack = True
+                                    move = [y_pos+2, x_pos-2]
+                                    attack_moves.append(move)
+                if x_pos > 1 and y_pos > 1:
+                    if type(self.board[y_pos-1][x_pos-1]) == Piece:
+                        if self.board[y_pos-1][x_pos-1].color == RED and pion.king == True and self.board[y_pos-2][x_pos-2] == 0:
+                            attack = True
+                            move = [y_pos-2, x_pos-2]
+                            attack_moves.append(move)
 
-        # print(pion.king)
-        if pion.color == WHITE or pion.king == True:
-            if y_pos < 7:
-                if x_pos < 7:
-                    if self.board[y_pos+1][x_pos+1] == 0:
-                        move = [y_pos+1, x_pos+1]
-                        normal_moves.append(move)
-                    elif type(self.board[y_pos+1][x_pos+1]) == Piece:
-                        if x_pos < 6 and y_pos < 6:
-                            if self.board[y_pos+1][x_pos+1].color == RED and self.board[y_pos+2][x_pos+2] == 0:
-                                attack = True
-                                move = [y_pos+2, x_pos+2]
-                                attack_moves.append(move)
-                if x_pos > 0:
-                    if self.board[y_pos+1][x_pos-1] == 0:
-                        move = [y_pos+1, x_pos-1]
-                        normal_moves.append(move)
-                    elif type(self.board[y_pos+1][x_pos-1]) == Piece:
-                        if x_pos > 1 and y_pos < 6 and self.board[y_pos+2][x_pos-2] == 0:
-                            if self.board[y_pos+1][x_pos-1].color == RED and self.board[y_pos+2][x_pos-2] == 0:
+                if x_pos < 6 and y_pos > 1:
+                    if type(self.board[y_pos-1][x_pos+1]) == Piece:
+                        if self.board[y_pos-1][x_pos+1].color == RED and pion.king == True and self.board[y_pos-2][x_pos+2] == 0:
+                            attack = True
+                            move = [y_pos-2, x_pos+2]
+                            attack_moves.append(move)
+
+            if pion.color == RED or pion.king == True:
+                if y_pos > 0:
+                    if x_pos > 0:
+                        if self.board[y_pos-1][x_pos-1] == 0:
+                            move = [y_pos-1, x_pos-1]
+                            normal_moves.append(move)
+                        elif type(self.board[y_pos-1][x_pos-1]) == Piece:
+                            if self.board[y_pos-1][x_pos-1].color == WHITE and x_pos > 1 and y_pos > 1:
+                                if self.board[y_pos-2][x_pos-2] == 0:
+                                    attack = True
+                                    move = [y_pos-2, x_pos-2]
+                                    attack_moves.append(move)
+                    if x_pos < 7:
+                        if self.board[y_pos-1][x_pos+1] == 0:
+                            move = [y_pos-1, x_pos+1]
+                            normal_moves.append(move)
+                        elif type(self.board[y_pos-1][x_pos+1]) == Piece:
+                            if self.board[y_pos-1][x_pos+1].color == WHITE and x_pos < 6 and y_pos > 1:
+                                if self.board[y_pos-2][x_pos+2] == 0:
+                                    attack = True
+                                    move = [y_pos-2, x_pos+2]
+                                    attack_moves.append(move)
+                if y_pos < 6:
+                    if x_pos > 1:
+                        if type(self.board[y_pos+1][x_pos-1]) == Piece:
+                            if self.board[y_pos+1][x_pos-1].color == WHITE and pion.king == True and self.board[y_pos+2][x_pos-2] == 0:
                                 attack = True
                                 move = [y_pos+2, x_pos-2]
                                 attack_moves.append(move)
-            if x_pos > 1 and y_pos > 1:
-                if type(self.board[y_pos-1][x_pos-1]) == Piece:
-                    if self.board[y_pos-1][x_pos-1].color == RED and pion.king == True and self.board[y_pos-2][x_pos-2] == 0:
-                        attack = True
-                        move = [y_pos-2, x_pos-2]
-                        attack_moves.append(move)
-
-            if x_pos < 6 and y_pos > 1:
-                if type(self.board[y_pos-1][x_pos+1]) == Piece:
-                    if self.board[y_pos-1][x_pos+1].color == RED and pion.king == True and self.board[y_pos-2][x_pos+2] == 0:
-                        attack = True
-                        move = [y_pos-2, x_pos+2]
-                        attack_moves.append(move)
-
-        if pion.color == RED or pion.king == True:
-            if y_pos > 0:
-                if x_pos > 0:
-                    if self.board[y_pos-1][x_pos-1] == 0:
-                        move = [y_pos-1, x_pos-1]
-                        normal_moves.append(move)
-                    elif type(self.board[y_pos-1][x_pos-1]) == Piece:
-                        if self.board[y_pos-1][x_pos-1].color == WHITE and x_pos > 1 and y_pos > 1:
-                            if self.board[y_pos-2][x_pos-2] == 0:
+                    if x_pos < 6:
+                        if type(self.board[y_pos+1][x_pos+1]) == Piece:
+                            if self.board[y_pos+1][x_pos+1].color == WHITE and pion.king == True and self.board[y_pos+2][x_pos+2] == 0:
                                 attack = True
-                                move = [y_pos-2, x_pos-2]
+                                move = [y_pos+2, x_pos+2]
                                 attack_moves.append(move)
-                if x_pos < 7:
-                    if self.board[y_pos-1][x_pos+1] == 0:
-                        move = [y_pos-1, x_pos+1]
-                        normal_moves.append(move)
-                    elif type(self.board[y_pos-1][x_pos+1]) == Piece:
-                        if self.board[y_pos-1][x_pos+1].color == WHITE and x_pos < 6 and y_pos > 1:
-                            if self.board[y_pos-2][x_pos+2] == 0:
-                                attack = True
-                                move = [y_pos-2, x_pos+2]
-                                attack_moves.append(move)
-            if y_pos < 6:
-                if x_pos > 1:
-                    if type(self.board[y_pos+1][x_pos-1]) == Piece:
-                        if self.board[y_pos+1][x_pos-1].color == WHITE and pion.king == True and self.board[y_pos+2][x_pos-2] == 0:
-                            attack = True
-                            move = [y_pos+2, x_pos-2]
-                            attack_moves.append(move)
-                if x_pos < 6:
-                    if type(self.board[y_pos+1][x_pos+1]) == Piece:
-                        if self.board[y_pos+1][x_pos+1].color == WHITE and pion.king == True and self.board[y_pos+2][x_pos+2] == 0:
-                            attack = True
-                            move = [y_pos+2, x_pos+2]
-                            attack_moves.append(move)
 
-        if attack == False:
-            return normal_moves
-        else:
-            pion.must_attack = True
-            return attack_moves
+            if attack == False:
+                return normal_moves
+            else:
+                pion.must_attack = True
+                return attack_moves
+        return []
 
     def clear_moves(self):
         # after the move has been processed the board needs to have all green circles removed from it which are represented in the board as 1's
