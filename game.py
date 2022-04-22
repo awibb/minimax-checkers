@@ -83,6 +83,8 @@ class Game:
         prev_piece = self.board.board[self.prev_x][self.prev_y]
         self.board.move(prev_piece, int(row), int(col))
         new_piece = self.board.board[row][col]
+        if type(new_piece) == Piece:
+            new_piece.must_attack = False
         m = self.board.get_valid_moves(new_piece)
 
         # print("Old White Score: ", self.board.prev_white_rem)
@@ -102,6 +104,8 @@ class Game:
                 print("DOUBLE!")
                 print("DOUBLE!")
                 self._double = True
+                prev_piece.must_attack = False
+
         self.change_teams()
         if(self._double):
             self.change_teams()

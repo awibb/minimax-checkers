@@ -1,5 +1,5 @@
 import pygame
-from const import SQUARE_SIZE
+from const import RED, SQUARE_SIZE, WHITE
 
 class Piece:
     PADDING = 10
@@ -24,8 +24,8 @@ class Piece:
     def move(self, row, col):
         self.row = row
         self.col = col
-        if row == 0 or row == 7:
-            print("elo")
+        if row == 0 and self.color == RED:
             self.king = True
-            print(self.king)
+        elif row == 7 and self.color == WHITE:
+            self.king = True
         self.piece_position()
