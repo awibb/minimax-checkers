@@ -38,6 +38,7 @@ class Game:
             self.turn = RED
 
     def play(self, x, y):
+
         self.board.clear_moves()
         print("Current Piece Location: ({},{})".format(x, y))
         pieces = self.board.move_list(self.turn)
@@ -73,7 +74,6 @@ class Game:
 
         if(prev_piece.must_attack == True and new_piece.must_attack == True):
             if(self.board.prev_white_rem != self.board.white_rem or self.board.prev_red_rem != self.board.red_rem):
-
                 self._double = True
                 prev_piece.must_attack = False
 
