@@ -10,6 +10,7 @@ class Board:
         self.turn = RED
         self.create_board()
         self.white_rem, self.red_rem = 12,12
+        self.prev_white_rem, self.prev_red_rem  = self.white_rem, self.red_rem
     
 
     def set_x_y(self, x, y):

@@ -11,6 +11,7 @@ class Game:
         self.win = False
         self.prev_x = None
         self._prev_y = None
+        self._double = None
 
     def show(self):
         for row in range(8):
@@ -29,6 +30,11 @@ class Game:
         print("-------------------------------------")
         print("   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |")
 
+    def change_teams(self):
+        if self.turn == RED:
+            self.turn = WHITE
+        else:
+            self.turn = RED
     
     def play(self,x,y):
         #debug
@@ -48,6 +54,8 @@ class Game:
             self.board.draw_moves(moves)
             self.prev_x = x
             self.prev_y = y
+            self.board.prev_white_rem = self.board.white_rem
+            self.board.prev_red_rem = self.board.red_rem
             # ruch = [int(y_move), int(x_move)]
             # if ruch in moves:
             #     self.board.move(pionek, int(y_move), int(x_move))
@@ -71,7 +79,31 @@ class Game:
         self.board.clear_moves()
         prev_piece = self.board.board[self.prev_x][self.prev_y]
         self.board.move(prev_piece, int(row), int(col))
-        if self.turn == RED:
-            self.turn = WHITE
-        else:
-            self.turn = RED
+        new_piece = self.board.board[row][col]
+        if type(new_piece) == Piece:
+            new_piece.must_attack = False
+        m = self.board.get_valid_moves(new_piece)
+
+        # print("Old White Score: ", self.board.prev_white_rem)
+        # print("New White Score: ", self.board.white_rem)
+        # print()
+        # print("Old Red Score: ", self.board.prev_red_rem)
+        # print("New Red Score: ", self.board.red_rem)
+
+        print(self.board.prev_white_rem == self.board.white_rem)
+        print(self.board.prev_red_rem == self.board.red_rem)
+
+
+        if(prev_piece.must_attack == True and new_piece.must_attack == True):
+            if(self.board.prev_white_rem != self.board.white_rem or self.board.prev_red_rem != self.board.red_rem):
+                print("DOUBLE!")
+                print("DOUBLE!")
+                print("DOUBLE!")
+                print("DOUBLE!")
+                self._double = True
+                prev_piece.must_attack = False
+
+        self.change_teams()
+        if(self._double):
+            self.change_teams()
+            self._double = None
