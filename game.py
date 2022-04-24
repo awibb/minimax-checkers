@@ -1,6 +1,7 @@
 from board import Board
 from piece import Piece
 from const import RED, WHITE
+import random
 
 
 class Game:
@@ -31,9 +32,18 @@ class Game:
         print("-------------------------------------")
         print("   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |")
 
+    def ai_move(self):
+        pieces = self.board.move_list(WHITE)
+        piece = random.choice(pieces)
+        moves = self.board.get_valid_moves(piece)
+        move = random.choice(moves)
+        self.board.move(piece, move[0], move[1])
+        self.change_teams()
+
     def change_teams(self):
         if self.turn == RED:
             self.turn = WHITE
+            self.ai_move()
         else:
             self.turn = RED
 
