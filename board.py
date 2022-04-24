@@ -11,6 +11,7 @@ class Board:
         self.turn = RED
         self.create_board()
         self.white_rem, self.red_rem = 12, 12
+        self.white_kings, self.red_kings = 0, 0
         self.prev_white_rem, self.prev_red_rem = self.white_rem, self.red_rem
 
     def set_x_y(self, x, y):
@@ -60,6 +61,9 @@ class Board:
                             window, GREEN, (self.valid_move_position(col, row)), 15)
                     else:
                         piece.draw(window)
+
+    def evaluate(self):
+        return self.white_left - self.red_left + (self.white_kings * 1.5 - self.red_kings * 1.5)
 
     def get_valid_moves(self, pion: Piece, attack=False):
         normal_moves = []
@@ -181,6 +185,12 @@ class Board:
             piece.must_attack = False
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
+        if row == 0 and piece.color == RED:
+            piece.king = True
+            self.red_kings += 1
+        elif row == 7 and piece.color == WHITE:
+            piece.king = True
+            self.white_kings += 1
 
     def can_move(self, pion):
         if len(self.get_valid_moves(pion)) == 0:
