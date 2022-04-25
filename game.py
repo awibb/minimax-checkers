@@ -59,17 +59,20 @@ class Game:
         board_copy = deepcopy(self.board)
         pieces = board_copy.move_list(WHITE)
         for piece in pieces:
+            row, col = piece.row, piece.col
             moves = board_copy.get_valid_moves(piece)
             for m in moves:
                 board_copy.move(piece, m[0], m[1])
-                score = self.minimax(board_copy, 4, False)
+                score = self.minimax(board_copy, 2, False)
                 board_copy = deepcopy(self.board)
                 if score > best_score:
                     best_score = score
-                    best_move = [piece, m[0], m[1]]
+                    best_move = [row, col, m[0], m[1]]
         # doesn't make sense(row and col isnt a valid piece)
-        print(best_move[0].row)
-        print(best_move[0].col)
+        print(best_move)
+        move_piece = self.board.board[best_move[0]][best_move[1]]
+        self.board.move(move_piece, best_move[2], best_move[3])
+        self.change_teams()
 
     def change_teams(self):
         if self.turn == RED:
