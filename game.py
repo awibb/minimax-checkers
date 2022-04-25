@@ -63,7 +63,7 @@ class Game:
             moves = board_copy.get_valid_moves(piece)
             for m in moves:
                 board_copy.move(piece, m[0], m[1])
-                score = self.minimax(board_copy, 2, False)
+                score = self.minimax(board_copy, 4, False)
                 board_copy = deepcopy(self.board)
                 if score > best_score:
                     best_score = score
