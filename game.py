@@ -93,6 +93,9 @@ class Game:
                 self._double = True
                 prev_piece.must_attack = False
 
+        print("Red Kings: ", self.board.red_kings)
+        print("White Kings: ", self.board.white_kings)
+
         self.change_teams()
         if(self._double):
             self.change_teams()

@@ -172,12 +172,18 @@ class Board:
         dy = piece.col
         dx = int((dx + row) // 2)
         dy = int((dy + col) // 2)
-        self.board[int(dx)][int(dy)] = 0
-
+        jumped_piece = self.board[dx][dy]
         if(piece.color == RED):
             self.white_rem -= 1
-        else:
+            if(jumped_piece.king):
+                self.white_kings -= 1
+
+        elif piece.color == WHITE:
             self.red_rem -= 1
+            if(jumped_piece.king):
+                self.red_kings -= 1
+
+        self.board[int(dx)][int(dy)] = 0
 
     def move(self, piece, row, col):
         if piece.must_attack == True:
@@ -186,11 +192,13 @@ class Board:
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
         if row == 0 and piece.color == RED:
+            if piece.king == False:
+                self.red_kings += 1
             piece.king = True
-            self.red_kings += 1
         elif row == 7 and piece.color == WHITE:
+            if piece.king == False:
+                self.white_kings += 1
             piece.king = True
-            self.white_kings += 1
 
     def can_move(self, pion):
         if len(self.get_valid_moves(pion)) == 0:
