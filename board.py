@@ -63,7 +63,7 @@ class Board:
                         piece.draw(window)
 
     def evaluate(self):
-        return self.white_left - self.red_left + (self.white_kings * 1.5 - self.red_kings * 1.5)
+        return self.white_rem - self.red_rem + (self.white_kings * 1.5 - self.red_kings * 1.5)
 
     def get_valid_moves(self, pion: Piece, attack=False):
         normal_moves = []

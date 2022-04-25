@@ -1,7 +1,8 @@
 from board import Board
 from piece import Piece
 from const import RED, WHITE
-import random
+from cmath import inf
+from copy import deepcopy
 
 
 class Game:
@@ -32,13 +33,42 @@ class Game:
         print("-------------------------------------")
         print("   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |")
 
+    def minimax(self, state, depth, max_player):
+        copy_state = deepcopy(state)
+        result = depth == 0 or self.win
+        if result:
+            return copy_state.evaluate()
+
+        best_score = -inf if max_player else inf
+        pieces = copy_state.move_list(
+            WHITE) if max_player else copy_state.move_list(RED)
+        for piece in pieces:
+            moves = state.get_valid_moves(piece)
+            for m in moves:
+                state.move(piece, m[0], m[1])
+                score = self.minimax(
+                    copy_state, depth-1, False) if max_player else self.minimax(copy_state, depth-1, True)
+                copy_state = deepcopy(state)
+                best_score = max(score, best_score) if max_player else min(
+                    score, best_score)
+        return best_score
+
     def ai_move(self):
-        pieces = self.board.move_list(WHITE)
-        piece = random.choice(pieces)
-        moves = self.board.get_valid_moves(piece)
-        move = random.choice(moves)
-        self.board.move(piece, move[0], move[1])
-        self.change_teams()
+        best_move = None
+        best_score = -inf
+        board_copy = deepcopy(self.board)
+        pieces = board_copy.move_list(WHITE)
+        for piece in pieces:
+            moves = board_copy.get_valid_moves(piece)
+            for m in moves:
+                board_copy.move(piece, m[0], m[1])
+                score = self.minimax(board_copy, 4, False)
+                board_copy = deepcopy(self.board)
+                if score > best_score:
+                    best_score = score
+                    best_move = [piece, m[0], m[1]]
+
+        self.board.move(best_move[0], best_move[1], best_move[2])
 
     def change_teams(self):
         if self.turn == RED:
