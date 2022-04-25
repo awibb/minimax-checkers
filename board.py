@@ -79,20 +79,22 @@ class Board:
                             normal_moves.append(move)
                         elif type(self.board[y_pos+1][x_pos+1]) == Piece:
                             if x_pos < 6 and y_pos < 6:
-                                if self.board[y_pos+1][x_pos+1].color == RED and self.board[y_pos+2][x_pos+2] == 0 and self.board[y_pos+1][x_pos+1].color != self.board[y_pos][x_pos].color:
-                                    attack = True
-                                    move = [y_pos+2, x_pos+2]
-                                    attack_moves.append(move)
+                                if type(self.board[y_pos][x_pos]) == Piece:
+                                    if self.board[y_pos+1][x_pos+1].color == RED and self.board[y_pos+2][x_pos+2] == 0 and self.board[y_pos+1][x_pos+1].color != self.board[y_pos][x_pos].color:
+                                        attack = True
+                                        move = [y_pos+2, x_pos+2]
+                                        attack_moves.append(move)
                     if x_pos > 0:
                         if self.board[y_pos+1][x_pos-1] == 0:
                             move = [y_pos+1, x_pos-1]
                             normal_moves.append(move)
                         elif type(self.board[y_pos+1][x_pos-1]) == Piece:
                             if x_pos > 1 and y_pos < 6 and self.board[y_pos+2][x_pos-2] == 0:
-                                if self.board[y_pos+1][x_pos-1].color == RED and self.board[y_pos+2][x_pos-2] == 0 and self.board[y_pos+1][x_pos-1].color != self.board[y_pos][x_pos].color:
-                                    attack = True
-                                    move = [y_pos+2, x_pos-2]
-                                    attack_moves.append(move)
+                                if type(self.board[y_pos][x_pos]) == Piece:
+                                    if self.board[y_pos+1][x_pos-1].color == RED and self.board[y_pos+2][x_pos-2] == 0 and self.board[y_pos+1][x_pos-1].color != self.board[y_pos][x_pos].color:
+                                        attack = True
+                                        move = [y_pos+2, x_pos-2]
+                                        attack_moves.append(move)
                 if x_pos > 1 and y_pos > 1:
                     if type(self.board[y_pos-1][x_pos-1]) == Piece:
                         if self.board[y_pos-1][x_pos-1].color == RED and pion.king == True and self.board[y_pos-2][x_pos-2] == 0:
@@ -115,20 +117,22 @@ class Board:
                             normal_moves.append(move)
                         elif type(self.board[y_pos-1][x_pos-1]) == Piece:
                             if self.board[y_pos-1][x_pos-1].color == WHITE and x_pos > 1 and y_pos > 1:
-                                if self.board[y_pos-2][x_pos-2] == 0 and self.board[y_pos-1][x_pos-1].color != self.board[y_pos][x_pos].color:
-                                    attack = True
-                                    move = [y_pos-2, x_pos-2]
-                                    attack_moves.append(move)
+                                if type(self.board[y_pos][x_pos]) == Piece:
+                                    if self.board[y_pos-2][x_pos-2] == 0 and self.board[y_pos-1][x_pos-1].color != self.board[y_pos][x_pos].color:
+                                        attack = True
+                                        move = [y_pos-2, x_pos-2]
+                                        attack_moves.append(move)
                     if x_pos < 7:
                         if self.board[y_pos-1][x_pos+1] == 0:
                             move = [y_pos-1, x_pos+1]
                             normal_moves.append(move)
                         elif type(self.board[y_pos-1][x_pos+1]) == Piece:
                             if self.board[y_pos-1][x_pos+1].color == WHITE and x_pos < 6 and y_pos > 1:
-                                if self.board[y_pos-2][x_pos+2] == 0 and self.board[y_pos-1][x_pos+1].color != self.board[y_pos][x_pos].color:
-                                    attack = True
-                                    move = [y_pos-2, x_pos+2]
-                                    attack_moves.append(move)
+                                if type(self.board[y_pos][x_pos]) == Piece:
+                                    if self.board[y_pos-2][x_pos+2] == 0 and self.board[y_pos-1][x_pos+1].color != self.board[y_pos][x_pos].color:
+                                        attack = True
+                                        move = [y_pos-2, x_pos+2]
+                                        attack_moves.append(move)
                 if y_pos < 6:
                     if x_pos > 1:
                         if type(self.board[y_pos+1][x_pos-1]) == Piece:
@@ -173,15 +177,18 @@ class Board:
         dx = int((dx + row) // 2)
         dy = int((dy + col) // 2)
         jumped_piece = self.board[dx][dy]
-        if(piece.color == RED):
-            self.white_rem -= 1
-            if(jumped_piece.king):
-                self.white_kings -= 1
 
-        elif piece.color == WHITE:
-            self.red_rem -= 1
-            if(jumped_piece.king):
-                self.red_kings -= 1
+        if type(jumped_piece) == Piece:
+
+            if(piece.color == RED):
+                self.white_rem -= 1
+                if(jumped_piece.king):
+                    self.white_kings -= 1
+
+            elif piece.color == WHITE:
+                self.red_rem -= 1
+                if(jumped_piece.king):
+                    self.red_kings -= 1
 
         self.board[int(dx)][int(dy)] = 0
 

@@ -67,8 +67,9 @@ class Game:
                 if score > best_score:
                     best_score = score
                     best_move = [piece, m[0], m[1]]
-
-        self.board.move(best_move[0], best_move[1], best_move[2])
+        # doesn't make sense(row and col isnt a valid piece)
+        print(best_move[0].row)
+        print(best_move[0].col)
 
     def change_teams(self):
         if self.turn == RED:
