@@ -76,12 +76,10 @@ class Game:
         self.board.get_valid_moves(move_piece)
 
         self.board.move(move_piece, best_move[2], best_move[3])
-        self.change_teams()
 
     def change_teams(self):
         if self.turn == RED:
             self.turn = WHITE
-            self.ai_move()
         else:
             self.turn = RED
 

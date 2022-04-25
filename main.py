@@ -1,6 +1,6 @@
 from tkinter import W
 import pygame
-from const import WIDTH, HEIGHT, SQUARE_SIZE
+from const import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE
 from game import Game
 from piece import Piece
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -23,14 +23,20 @@ def main():
             if event.type == pygame.QUIT:
                 game_loop = False
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
-                row, col = x_y(pos)
-                userClick = gra.board.board[row][col]
-                if type(userClick) == Piece and userClick.color == gra.turn:
-                    gra.play(row, col)
-                if type(userClick) == int and userClick == 1 and gra.prev_x != None and gra.prev_y != None:
-                    gra.process_move(row, col)
+            if(gra.turn == RED):
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    row, col = x_y(pos)
+                    userClick = gra.board.board[row][col]
+                    if type(userClick) == Piece and userClick.color == gra.turn:
+                        gra.play(row, col)
+                    if type(userClick) == int and userClick == 1 and gra.prev_x != None and gra.prev_y != None:
+                        gra.process_move(row, col)
+
+            elif gra.turn == WHITE:
+                gra.ai_move()
+                gra.change_teams()
         gra.board.draw(WINDOW)
         pygame.display.update()
 
