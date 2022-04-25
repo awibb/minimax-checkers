@@ -69,8 +69,12 @@ class Game:
                     best_score = score
                     best_move = [row, col, m[0], m[1]]
         # doesn't make sense(row and col isnt a valid piece)
-        print(best_move)
+        # print(best_move)
         move_piece = self.board.board[best_move[0]][best_move[1]]
+
+        # needs to be run for the attack flag to be true and remove pieces
+        self.board.get_valid_moves(move_piece)
+
         self.board.move(move_piece, best_move[2], best_move[3])
         self.change_teams()
 
