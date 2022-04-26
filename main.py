@@ -4,13 +4,8 @@ from const import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE
 from game import Game
 from piece import Piece
 from time import sleep
-from pynput.keyboard import Key, Controller
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("checkers-ui")
-
-
-keyboard = Controller()
-
 
 def x_y(pos):
     x, y = pos
