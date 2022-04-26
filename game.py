@@ -53,17 +53,19 @@ class Game:
                     score, best_score)
         return best_score
 
-    def ai_move(self):
+    def ai_move(self, color):
         best_move = None
         best_score = -inf
         board_copy = deepcopy(self.board)
-        pieces = board_copy.move_list(WHITE)
+        pieces = board_copy.move_list(
+            WHITE) if color == WHITE else board_copy.move_list(RED)
         for piece in pieces:
             row, col = piece.row, piece.col
             moves = board_copy.get_valid_moves(piece)
             for m in moves:
                 board_copy.move(piece, m[0], m[1])
-                score = self.minimax(board_copy, 4, False)
+                score = self.minimax(board_copy, 4, False) if color == WHITE else self.minimax(
+                    board_copy, 4, True)
                 board_copy = deepcopy(self.board)
                 if score > best_score:
                     best_score = score
