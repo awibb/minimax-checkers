@@ -1,3 +1,4 @@
+from types import new_class
 from board import Board
 from piece import Piece
 from const import RED, WHITE
@@ -14,7 +15,6 @@ class Game:
         self.win = False
         self.prev_x = None
         self._prev_y = None
-        self._double = None
 
     def show(self):
         for row in range(8):
@@ -74,7 +74,6 @@ class Game:
 
         # needs to be run for the attack flag to be true and remove pieces
         self.board.get_valid_moves(move_piece)
-
         self.board.move(move_piece, best_move[2], best_move[3])
 
     def change_teams(self):
@@ -114,25 +113,7 @@ class Game:
             new_piece.must_attack = False
             m = self.board.get_valid_moves(new_piece)
 
-        # print("Old White Score: ", self.board.prev_white_rem)
-        # print("New White Score: ", self.board.white_rem)
-        # print()
-        # print("Old Red Score: ", self.board.prev_red_rem)
-        # print("New Red Score: ", self.board.red_rem)
-
-        print(self.board.prev_white_rem == self.board.white_rem)
-        print(self.board.prev_red_rem == self.board.red_rem)
-
-        if(prev_piece.must_attack == True and new_piece.must_attack == True):
-            if(self.board.prev_white_rem != self.board.white_rem or self.board.prev_red_rem != self.board.red_rem):
-                print("DOUBLE!")
-                self._double = True
-                prev_piece.must_attack = False
-
-        print("Red Kings: ", self.board.red_kings)
-        print("White Kings: ", self.board.white_kings)
-
         self.change_teams()
-        if(self._double):
+        if(self.board.double):
             self.change_teams()
-            self._double = None
+            self.board.double = False
