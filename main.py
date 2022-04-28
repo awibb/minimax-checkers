@@ -1,4 +1,3 @@
-from tkinter import W
 import pygame
 from const import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE
 from game import Game

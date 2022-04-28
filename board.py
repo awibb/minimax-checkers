@@ -1,5 +1,3 @@
-from cmath import pi
-from tkinter import W
 import pygame
 from const import BLACK, ROWS, SQUARE_SIZE, RED, COLS, WHITE, GREEN
 from piece import Piece
@@ -193,6 +191,7 @@ class Board:
         self.board[int(dx)][int(dy)] = 0
 
     def move(self, piece, row, col):
+        old_attack = piece.must_attack
         if piece.must_attack == True:
             self.remove(piece, row, col)
             piece.must_attack = False
@@ -206,6 +205,15 @@ class Board:
             if piece.king == False:
                 self.white_kings += 1
             piece.king = True
+        new_piece = self.board[row][col]
+        if type(new_piece) == Piece:
+            moves = self.get_valid_moves(new_piece)
+            new_attack = new_piece.must_attack and len(moves) >= 1
+            # print("Old Attack: ", old_attack)
+            # print("New Attack: ", new_attack)
+            if new_attack and old_attack:
+                # if multiple ways to double jump it will default to the first one, could also call best_move here to decide which double jump to pick if its the ais turn i think
+                self.move(new_piece, moves[0][0], moves[0][1])
 
     def can_move(self, pion):
         if len(self.get_valid_moves(pion)) == 0:
