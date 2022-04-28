@@ -15,6 +15,7 @@ class Game:
         self.win = False
         self.prev_x = None
         self._prev_y = None
+        self.counter = 0
 
     def show(self):
         for row in range(8):
@@ -33,7 +34,7 @@ class Game:
         print("-------------------------------------")
         print("   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |")
 
-    def minimax(self, state, depth, max_player):
+    def minimax(self, state, depth, max_player, alpha, beta):
         copy_state = deepcopy(state)
         result = depth == 0 or self.win
         if result:
@@ -43,14 +44,24 @@ class Game:
         pieces = copy_state.move_list(
             WHITE) if max_player else copy_state.move_list(RED)
         for piece in pieces:
-            moves = state.get_valid_moves(piece)
+            moves = copy_state.get_valid_moves(piece)
             for m in moves:
-                state.move(piece, m[0], m[1])
+                copy_state.move(piece, m[0], m[1])
                 score = self.minimax(
-                    copy_state, depth-1, False) if max_player else self.minimax(copy_state, depth-1, True)
+                    copy_state, depth-1, False, alpha, beta) if max_player else self.minimax(copy_state, depth-1, True, alpha, beta)
                 copy_state = deepcopy(state)
                 best_score = max(score, best_score) if max_player else min(
                     score, best_score)
+                if max_player:
+                    alpha = max(alpha, best_score)
+                    if alpha >= beta:
+                        break
+                elif max_player == False:
+                    beta = min(best_score, beta)
+                    if alpha >= beta:
+                        break
+                self.counter += 1
+
         return best_score
 
     def ai_move(self):
@@ -63,7 +74,7 @@ class Game:
             moves = board_copy.get_valid_moves(piece)
             for m in moves:
                 board_copy.move(piece, m[0], m[1])
-                score = self.minimax(board_copy, 4, False)
+                score = self.minimax(board_copy, 4, False, -inf, inf)
                 board_copy = deepcopy(self.board)
                 if score > best_score:
                     best_score = score
@@ -75,6 +86,8 @@ class Game:
         # needs to be run for the attack flag to be true and remove pieces
         self.board.get_valid_moves(move_piece)
         self.board.move(move_piece, best_move[2], best_move[3])
+        print("Possible states: ", self.counter)
+        self.counter = 0
 
     def change_teams(self):
         if self.turn == RED:
