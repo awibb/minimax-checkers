@@ -112,8 +112,4 @@ class Game:
         if type(new_piece) == Piece:
             new_piece.must_attack = False
             m = self.board.get_valid_moves(new_piece)
-
         self.change_teams()
-        if(self.board.double):
-            self.change_teams()
-            self.board.double = False

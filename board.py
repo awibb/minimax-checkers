@@ -1,5 +1,3 @@
-from cmath import pi
-from tkinter import W
 import pygame
 from const import BLACK, ROWS, SQUARE_SIZE, RED, COLS, WHITE, GREEN
 from piece import Piece
@@ -13,7 +11,6 @@ class Board:
         self.white_rem, self.red_rem = 12, 12
         self.white_kings, self.red_kings = 0, 0
         self.prev_white_rem, self.prev_red_rem = self.white_rem, self.red_rem
-        self.double = False
 
     def set_x_y(self, x, y):
         self.prev_x = x
@@ -210,13 +207,13 @@ class Board:
             piece.king = True
         new_piece = self.board[row][col]
         if type(new_piece) == Piece:
-            self.get_valid_moves(new_piece)
-            new_attack = new_piece.must_attack
-            print("Old Attack: ", old_attack)
-            print("New Attack: ", new_attack)
+            moves = self.get_valid_moves(new_piece)
+            new_attack = new_piece.must_attack and len(moves) >= 1
+            # print("Old Attack: ", old_attack)
+            # print("New Attack: ", new_attack)
             if new_attack and old_attack:
-                self.double = True
-                print("Double Jump")
+                # if multiple ways to double jump it will default to the first one
+                self.move(new_piece, moves[0][0], moves[0][1])
 
     def can_move(self, pion):
         if len(self.get_valid_moves(pion)) == 0:
