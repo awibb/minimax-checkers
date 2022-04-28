@@ -69,6 +69,7 @@ class Board:
         if(type(pion) == Piece):
             x_pos = pion.col
             y_pos = pion.row
+            pion.must_attack = False
             if pion.color == WHITE or pion.king == True:
                 if y_pos < 7:
                     if x_pos < 7:

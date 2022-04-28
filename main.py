@@ -6,6 +6,7 @@ from time import sleep
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("checkers-ui")
 
+
 def x_y(pos):
     x, y = pos
     return y // SQUARE_SIZE, x // SQUARE_SIZE
@@ -45,7 +46,6 @@ def main():
                 gra.change_teams()
                 gra.board.draw(WINDOW)
                 pygame.display.update()
-                sleep(2)
 
             elif gra.turn == WHITE:
                 gra.ai_move(WHITE)
