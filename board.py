@@ -212,7 +212,7 @@ class Board:
             # print("Old Attack: ", old_attack)
             # print("New Attack: ", new_attack)
             if new_attack and old_attack:
-                # if multiple ways to double jump it will default to the first one
+                # if multiple ways to double jump it will default to the first one, could also call best_move here to decide which double jump to pick if its the ais turn i think
                 self.move(new_piece, moves[0][0], moves[0][1])
 
     def can_move(self, pion):
