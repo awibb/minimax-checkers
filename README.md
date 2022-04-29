@@ -37,23 +37,8 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-
-
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
-
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
-
+Minimax Checkers is an application that aims to recreate the classic board game of checkers and combine it with an intelligent opponent who is challenging to win against. The user will be able to play their moves at their discretion, while the opponent will use minimax to minimize the maximum move of the player while maximizing their own move.
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 ### Built With
 * [python](https://www.python.org/)
