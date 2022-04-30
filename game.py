@@ -34,21 +34,22 @@ class Game:
         print("-------------------------------------")
         print("   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |")
 
-    def minimax(self, state, depth, max_player, alpha, beta):
+    def minimax(self, state, depth, max_player, alpha, beta, color, initial_color):
         copy_state = deepcopy(state)
         result = depth == 0 or self.win
         if result:
-            return copy_state.evaluate()
+            return copy_state.evaluate(initial_color)
 
         best_score = -inf if max_player else inf
         pieces = copy_state.move_list(
-            WHITE) if max_player else copy_state.move_list(RED)
+            WHITE) if color == RED else copy_state.move_list(RED)
+        current_color = RED if color==WHITE else WHITE
         for piece in pieces:
             moves = copy_state.get_valid_moves(piece)
             for m in moves:
                 copy_state.move(piece, m[0], m[1])
                 score = self.minimax(
-                    copy_state, depth-1, False, alpha, beta) if max_player else self.minimax(copy_state, depth-1, True, alpha, beta)
+                    copy_state, depth-1, False, alpha, beta, current_color, initial_color) if max_player else self.minimax(copy_state, depth-1, True, alpha, beta, current_color, initial_color)
                 copy_state = deepcopy(state)
                 best_score = max(score, best_score) if max_player else min(
                     score, best_score)
@@ -75,8 +76,8 @@ class Game:
             moves = board_copy.get_valid_moves(piece)
             for m in moves:
                 board_copy.move(piece, m[0], m[1])
-                score = self.minimax(board_copy, 4, False, -inf, inf) if color == WHITE else self.minimax(
-                    board_copy, 4, True, -inf, inf)
+                score = self.minimax(board_copy, 4, False, -inf, inf, WHITE, WHITE) if color == WHITE else self.minimax(
+                    board_copy, 4, False, -inf, inf, RED, RED)
                 board_copy = deepcopy(self.board)
                 if score > best_score:
                     best_score = score
