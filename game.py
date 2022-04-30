@@ -33,6 +33,10 @@ class Game:
             print(row, rzad)
         print("-------------------------------------")
         print("   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |")
+    
+    def is_done(self):
+        if self.board.white_rem + self.board.white_kings == 0 or self.board.red_rem + self.board.red_kings == 0:
+            self.win = True
 
     def minimax(self, state, depth, max_player, alpha, beta, color, initial_color):
         copy_state = deepcopy(state)
@@ -84,12 +88,16 @@ class Game:
                     best_move = [row, col, m[0], m[1]]
         # doesn't make sense(row and col isnt a valid piece)
         # print(best_move)
+        if best_move == None:
+            best_move[0] = pieces[0].row
+            best_move[1] = pieces[0].col
         move_piece = self.board.board[best_move[0]][best_move[1]]
 
         # needs to be run for the attack flag to be true and remove pieces
         self.board.get_valid_moves(move_piece)
         self.board.move(move_piece, best_move[2], best_move[3])
         print("Possible states: ", self.counter)
+        self.is_done()
         self.counter = 0
 
     def change_teams(self):
