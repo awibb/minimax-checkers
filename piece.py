@@ -27,8 +27,4 @@ class Piece:
     def move(self, row, col):
         self.row = row
         self.col = col
-        if row == 0 and self.color == RED:
-            self.king = True
-        elif row == 7 and self.color == WHITE:
-            self.king = True
         self.piece_position()
