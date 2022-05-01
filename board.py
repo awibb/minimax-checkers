@@ -29,6 +29,11 @@ class Board:
                 pygame.draw.rect(window, RED, (row*SQUARE_SIZE,
                                  col*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
+    def is_finished(self):
+        if self.white_kings + self.white_rem == 0 or self.red_kings + self.red_rem == 0:
+            return True
+        return False
+
     def create_board(self):
         for row in range(ROWS):
             self.board.append([0, 0, 0, 0, 0, 0, 0, 0])

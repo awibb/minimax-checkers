@@ -37,9 +37,12 @@ class Game:
     def is_done(self):
         if self.board.white_rem + self.board.white_kings == 0 or self.board.red_rem + self.board.red_kings == 0:
             self.win = True
+        else:
+            self.win = False
 
     def minimax(self, state, depth, max_player, alpha, beta, color, initial_color):
         copy_state = deepcopy(state)
+        self.win = copy_state.is_finished()
         result = depth == 0 or self.win
         if result:
             return copy_state.evaluate(initial_color)
