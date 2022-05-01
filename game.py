@@ -103,7 +103,7 @@ class Game:
         self.is_done()
         self.counter = 0
         # only needed if its ai v ai, useful for when it makes a move so fast its hard to tell visually which piece moved
-        sleep(1)
+        # sleep(1)
 
     def change_teams(self):
         if self.turn == RED:
