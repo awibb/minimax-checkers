@@ -1,8 +1,6 @@
 import pygame
 from const import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE
 from game import Game
-from piece import Piece
-from time import sleep
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("checkers-ui")
 
@@ -32,7 +30,7 @@ def main():
 
             elif(gra.turn == RED):
 
-                #if event.type == pygame.MOUSEBUTTONDOWN:
+                # if event.type == pygame.MOUSEBUTTONDOWN:
                 #     pos = pygame.mouse.get_pos()
                 #     row, col = x_y(pos)
                 #     userClick = gra.board.board[row][col]
