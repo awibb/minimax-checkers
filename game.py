@@ -1,9 +1,9 @@
-from types import new_class
 from board import Board
 from piece import Piece
 from const import RED, WHITE
 from cmath import inf
 from copy import deepcopy
+from time import sleep
 
 
 class Game:
@@ -33,7 +33,7 @@ class Game:
             print(row, rzad)
         print("-------------------------------------")
         print("   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |")
-    
+
     def is_done(self):
         if self.board.white_rem + self.board.white_kings == 0 or self.board.red_rem + self.board.red_kings == 0:
             self.win = True
@@ -50,7 +50,7 @@ class Game:
         best_score = -inf if max_player else inf
         pieces = copy_state.move_list(
             WHITE) if color == RED else copy_state.move_list(RED)
-        current_color = RED if color==WHITE else WHITE
+        current_color = RED if color == WHITE else WHITE
         for piece in pieces:
             moves = copy_state.get_valid_moves(piece)
             for m in moves:
@@ -102,6 +102,8 @@ class Game:
         print("Possible states: ", self.counter)
         self.is_done()
         self.counter = 0
+        # only needed if its ai v ai, useful for when it makes a move so fast its hard to tell visually which piece moved
+        sleep(1)
 
     def change_teams(self):
         if self.turn == RED:
