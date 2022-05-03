@@ -3,7 +3,6 @@ from piece import Piece
 from const import RED, WHITE
 from cmath import inf
 from copy import deepcopy
-from time import sleep
 
 
 class Game:
@@ -102,8 +101,6 @@ class Game:
         print("Possible states: ", self.counter)
         self.is_done()
         self.counter = 0
-        # only needed if its ai v ai, useful for when it makes a move so fast its hard to tell visually which piece moved
-        # sleep(1)
 
     def change_teams(self):
         if self.turn == RED:
