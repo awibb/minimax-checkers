@@ -31,20 +31,20 @@ def main():
 
             elif(gra.turn == RED):
 
-                # if event.type == pygame.MOUSEBUTTONDOWN:
-                #     pos = pygame.mouse.get_pos()
-                #     row, col = x_y(pos)
-                #     userClick = gra.board.board[row][col]
-                #     if type(userClick) == Piece and userClick.color == gra.turn:
-                #         gra.play(row, col)
-                #     if type(userClick) == int and userClick == 1 and gra.prev_x != None and gra.prev_y != None:
-                #         gra.process_move(row, col)
-                gra.board.draw(WINDOW)
-                pygame.display.update()
-                gra.ai_move(gra.turn)
-                gra.change_teams()
-                gra.board.draw(WINDOW)
-                pygame.display.update()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+                    row, col = x_y(pos)
+                    userClick = gra.board.board[row][col]
+                    if type(userClick) == Piece and userClick.color == gra.turn:
+                        gra.play(row, col)
+                    if type(userClick) == int and userClick == 1 and gra.prev_x != None and gra.prev_y != None:
+                        gra.process_move(row, col)
+                # gra.board.draw(WINDOW)
+                # pygame.display.update()
+                # gra.ai_move(gra.turn)
+                # gra.change_teams()
+                # gra.board.draw(WINDOW)
+                # pygame.display.update()
 
             elif gra.turn == WHITE:
                 gra.ai_move(WHITE)
